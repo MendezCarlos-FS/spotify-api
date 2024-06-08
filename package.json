@@ -1,0 +1,17 @@
+{
+    "name": "spotify-api",
+    "version": "1.0.0",
+    "engines": {
+        "node": "20.9.0"
+    },
+    "scripts": {
+        "install-all": "npm install --prefix backend-api",
+        "install-backend-api": "npm install --prefix backend-api",
+        "start": "npm start --prefix api",
+        "dev:react": "concurrently --raw \"npm run backend-api\"",
+        "backend-api": "cd backend-api && npm run dev"
+    },
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
