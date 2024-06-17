@@ -41,5 +41,7 @@ To be implemented
 
 ### Links
 
-- http://localhost:8000 - Link to backend API
+- http://localhost:8000 - Link to backend API (Redirects to the spotify login URI)
+- http://localhost:8000/api/v1/spotify/login - Redirects to Spotify's login and authorization page
+- http://localhost:8000/api/v1/spotify/callback - Used to obtain the JWT after successful authorization
 - More to be implemented

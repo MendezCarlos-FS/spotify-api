@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const redirect_uri = process.env.REDIRECT_URI || "http://localhost:8000/api/v1/spotify/callback"
+const redirect_uri = process.env.REDIRECT_URI || "http://localhost:8000/api/v1/spotify/callback";
+const JWT = { time_obtained: null, token: null };
 
 router.get("/login", (req, res) => {
     res.redirect(301, 'https://accounts.spotify.com/authorize?' +
@@ -14,13 +15,13 @@ router.get("/callback", async (req, res) => {
     const error = req.query.error || null;
 
     if (error) {
-        res.status(500).json({ message: "An error has when accessing Spotify."});
+        res.status(500).json({ message: "An error has occurred when trying to access Spotify."});
         return;
     }
 
     try {
         const query = `grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`;
-        const test = await fetch(`https://accounts.spotify.com/api/token?${query}`, {
+        JWT.token = await fetch(`https://accounts.spotify.com/api/token?${query}`, {
             method: "POST",
             headers: {
                 "content-type": "application/x-www-form-urlencoded",
@@ -28,9 +29,11 @@ router.get("/callback", async (req, res) => {
             }
         }).then(res => res.json());
 
-        console.log(test);
-
-        res.status(200).json(test);
+        if (JWT.token.access_token) {
+            JWT.time_obtained = Date.now();
+        }
+        
+        res.status(JWT.token.access_token ? 200 : 500).json(JWT);
     } catch(error) {
         res.status(500).json({ message: error.message});
     }
