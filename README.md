@@ -44,4 +44,5 @@ To be implemented
 - http://localhost:8000 - Link to backend API (Redirects to the spotify login URI)
 - http://localhost:8000/api/v1/spotify/login - Redirects to Spotify's login and authorization page
 - http://localhost:8000/api/v1/spotify/callback - Used to obtain the JWT after successful authorization
+- http://localhost:8000/api/v1/spotify/search?q=[query] - Searches the Spotify Web API for albums, tracks and artists related to the specified.
 - More to be implemented

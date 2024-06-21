@@ -12,11 +12,8 @@ const spotifyRouter = require("./routes/spotify");
 app.use(express.json());
 app.use("/api/v1/spotify", spotifyRouter);
 
-const redirect_uri = process.env.REDIRECT_URI || "http://localhost:8000/api/v1/spotify/callback"
-
 app.get("/", (req, res) => {
-    res.redirect(301, 'https://accounts.spotify.com/authorize?' +
-        `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}`);
+    res.redirect(301, 'http://localhost:8000/api/v1/spotify/login');
 });
 
 app.listen(PORT, () => {
