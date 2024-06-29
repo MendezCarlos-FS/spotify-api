@@ -5,11 +5,13 @@
         "node": "20.9.0"
     },
     "scripts": {
-        "install-all": "npm install --prefix backend-api",
+        "install-all": "npm install --prefix backend-api && npm install --prefix frontend-react",
         "install-backend-api": "npm install --prefix backend-api",
-        "start": "npm start --prefix api",
-        "dev:react": "concurrently --raw \"npm run backend-api\"",
-        "backend-api": "cd backend-api && npm run dev"
+        "install-frontend-react": "npm install --prefix frontend-react",
+        "start": "npm start --prefix backend-api && npm start --prefix frontend-react",
+        "dev:react": "concurrently --raw \"npm run backend-api\" \"npm run frontend-react\"",
+        "backend-api": "cd backend-api && npm run dev",
+        "frontend-react": "cd frontend-react && npm run start"
     },
     "dependencies": {
         "concurrently": "^8.2.2"
