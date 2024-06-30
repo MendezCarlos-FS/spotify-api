@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import authService from "../services/auth.service";
 
 export default function Home() {
-    const [searchValue, setSearchValue] = useState("");
     const [results, setResults] = useState(null);
     const [tracksCollapsed, setTracksCollapsed] = useState(false);
     const [albumsCollapsed, setAlbumsCollapsed] = useState(false);
     const [artistsCollapsed, setArtistsCollapsed] = useState(false);
 
-    function search() {
-        authService.search(searchValue, setResults);
-    }
+    useEffect(() => {
+        authService.setResultsSubscription(setResults);
+    }, []);
 
     function displayTracks() {
         if (!results?.tracks) return <></>;
@@ -157,12 +156,6 @@ export default function Home() {
 
     return (
         <section style={styles.container}>
-            <h1>Spotify Search</h1>
-            <div>
-                <input type="text" placeholder="Search for artist, track or album."
-                    onChange={$event => {setSearchValue($event.target.value)}}/>
-                <button type="button" onClick={search}>Search</button>
-            </div>
             {
                 results ?
                 <>

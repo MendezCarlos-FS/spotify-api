@@ -5,6 +5,8 @@ const API_BASE = process.env.REACT_APP_BASE_URL
 const jwtUrl = `${API_BASE}/spotify/checkJWT`;
 const logoutUrl = `${API_BASE}/spotify/logout`;
 const searchUrl = `${API_BASE}/spotify/search`;
+let resultsSubscription = null;
+let results = null;
 
 const checkJwt = (setLoading) => {
     fetch(jwtUrl)
@@ -30,16 +32,27 @@ const logout = async () => {
     });
 }
 
-const search = async (value, setResultsFunc) => {
+const search = async (value) => {
     fetch(`${searchUrl}?q=${value}`)
     .then(res => res.json())
     .then(json => {
-        setResultsFunc(json);
+        results = json;
+        if (resultsSubscription) {
+            resultsSubscription(results);
+        }
     });
+}
+
+const setResultsSubscription = (resultsSub) => {
+    resultsSubscription = resultsSub;
+    if (results && resultsSubscription) {
+        resultsSubscription(results);
+    }
 }
 
 export default {
     checkJwt,
     logout,
-    search
+    search,
+    setResultsSubscription
 }
