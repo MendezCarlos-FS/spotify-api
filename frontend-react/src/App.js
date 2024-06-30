@@ -1,18 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import Login from './pages/Login';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import { useEffect } from 'react';
+import authService from './services/auth.service';
 
 function App() {
+  useEffect(() => {
+    authService.checkJwt();
+  }, []);
+
   return (
-    <>
-      <Header/>
-      <main>
-        <Login/>
-      </main>
-      <Footer/>
-    </>
+    <main>
+      <Router>
+        <Header/>
+        <Routes>
+          <Route path='/' exact element={<Home/>}/>
+        </Routes>
+        <Footer/>
+      </Router>
+    </main>
   );
 }
 

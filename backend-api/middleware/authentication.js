@@ -3,8 +3,8 @@ const JWT = { time_obtained: null, token: null };
 
 function checkTokenValidity(req, res, next) {
     if (!JWT.token) {
-        res.redirect(301, 'https://accounts.spotify.com/authorize?' +
-            `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}`);
+        res.status(200).json({ url: 'https://accounts.spotify.com/authorize?' +
+            `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}` });
         return;
     }
 

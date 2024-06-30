@@ -5,9 +5,16 @@ const { JWT, checkTokenValidity, authenticationHeader } = require("../middleware
 const redirect_uri = process.env.REDIRECT_URI || "http://localhost:8000/api/v1/spotify/callback";
 
 router.get("/login", async (req, res) => {
-    res.redirect(301, 'https://accounts.spotify.com/authorize?' +
-        `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}`);
+    res.status(200).json({ url: 'https://accounts.spotify.com/authorize?' +
+        `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}` });
 });
+
+router.get("/logout", async (req, res) => {
+    JWT.time_obtained = null;
+    JWT.token = null;
+    res.status(200).json({ url: 'https://accounts.spotify.com/authorize?' +
+        `response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}` });
+})
 
 router.get("/callback", async (req, res) => {
     const code = req.query.code || null;
@@ -33,7 +40,7 @@ router.get("/callback", async (req, res) => {
             JWT.time_obtained = Date.now();
         }
         
-        res.status(JWT.token.access_token ? 200 : 500).json(JWT);
+        res.redirect("http://localhost:3000");
     } catch(error) {
         res.status(500).json({ message: error.message });
     }
@@ -55,6 +62,10 @@ router.get("/search", checkTokenValidity, async (req, res) => {
     } catch(error) {
         res.status(500).json({ message: error.message });
     }
+});
+
+router.get("/checkJWT", checkTokenValidity, (req, res) => {
+    res.status(200).json({ message: "JWT okay." });
 });
 
 module.exports = router;
