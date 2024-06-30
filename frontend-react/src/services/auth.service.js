@@ -6,13 +6,14 @@ const jwtUrl = `${API_BASE}/spotify/checkJWT`;
 const logoutUrl = `${API_BASE}/spotify/logout`;
 const searchUrl = `${API_BASE}/spotify/search`;
 
-const checkJwt = () => {
+const checkJwt = (setLoading) => {
     fetch(jwtUrl)
     .then(res => res.json())
     .then(json => {
         if (json.url) {
             window.location.href = json.url;
         }
+        setLoading(false);
     })
     .catch(err => {
         console.log(err);
