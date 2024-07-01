@@ -14,11 +14,11 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main style={styles.container}>
       <Router>
         {
           loading
-          ? <h2>Loading...</h2>
+          ? <h1 style={styles.loading}>Loading...</h1>
           :
           <>
             <Header/>
@@ -34,3 +34,17 @@ function App() {
 }
 
 export default App;
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    backgroundColor: "#171314",
+    minHeight: "100vh",
+  },
+  loading: {
+    color: "white",
+    textAlign: "center",
+  }
+}

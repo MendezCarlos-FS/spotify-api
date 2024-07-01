@@ -5,6 +5,7 @@ const API_BASE = process.env.REACT_APP_BASE_URL
 const jwtUrl = `${API_BASE}/spotify/checkJWT`;
 const logoutUrl = `${API_BASE}/spotify/logout`;
 const searchUrl = `${API_BASE}/spotify/search`;
+let loadingResults = false;
 let resultsSubscription = null;
 let results = null;
 
@@ -33,6 +34,7 @@ const logout = async () => {
 }
 
 const search = async (value) => {
+    loadingResults = true;
     fetch(`${searchUrl}?q=${value}`)
     .then(res => res.json())
     .then(json => {
@@ -40,7 +42,8 @@ const search = async (value) => {
         if (resultsSubscription) {
             resultsSubscription(results);
         }
-    });
+    })
+    .finally(() => loadingResults = false);
 }
 
 const setResultsSubscription = (resultsSub) => {
