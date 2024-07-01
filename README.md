@@ -18,7 +18,7 @@ To setup all of the project's dependencies, run:
 npm i && npm run install-all
 ```
 
-This project requires environment variables to run. For this, rename the `.env.copy` file to `.env` and setup the environment variables there.
+This project requires environment variables to run. For this, rename the `.env.copy` file to `.env` and setup the environment variables there. Both backend and frontend have a `.env.copy` file.
 
 ### Run Both Frontend and Backend Concurrently
 
@@ -36,7 +36,8 @@ npm run dev
 ### Run React.js Frontend
 
 ```
-To be implemented
+cd frontend-react
+npm run start
 ```
 
 ### Links
@@ -45,4 +46,5 @@ To be implemented
 - http://localhost:8000/api/v1/spotify/login - Redirects to Spotify's login and authorization page
 - http://localhost:8000/api/v1/spotify/callback - Used to obtain the JWT after successful authorization
 - http://localhost:8000/api/v1/spotify/search?q=[query] - Searches the Spotify Web API for albums, tracks and artists related to the specified query.
-- More to be implemented
+- http://localhost:8000/api/v1/spotify/checkJWT - Checks if the JWT is valid. If there is no JWT, it returns a redirect to the login page. If there is, it sends a status 200.
+- http://localhost:3000 - Frontend implementation of the Spotify API. Calls all the related endpoints from the backend.
